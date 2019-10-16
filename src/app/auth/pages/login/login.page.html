@@ -1,10 +1,22 @@
-<ion-content padding>
-  <h1 text-center>
+<ion-content class="ion-padding">
+    <h1 class="ion-text-center">
     <ion-icon name='done-all' color='primary' class='icon-7em'></ion-icon>
   </h1>
 
 
   <form [formGroup]='authForm' (submit)='onSubmit()'> <!-- authForm - nome da propriedade formGroup que criamos antes -->
+
+    <ng-container *ngIf='!configs.isSignIn'>
+      <ion-item>
+          <ion-icon name='person' color='primary' slot='start'></ion-icon>
+          <ion-input type='text' formControlName='name' placeholder='Name'></ion-input>
+          <ion-note slot='end' color='danger' *ngIf="name.dirty && name.hasError('required')">Required</ion-note>
+          <ion-note slot='end' color='danger' *ngIf="name.dirty && name.hasError('minlength')">Min 3 characters</ion-note>
+          <!--  sem esquecer de que pra acessar o 'name.dirty' é necessário criar um get no login.oage.ts no FormControl -->
+        </ion-item>
+    </ng-container>
+
+
     <ion-item>
       <ion-icon name='mail' color='primary' slot='start'></ion-icon>
       <ion-input type='mail' formControlName='email' placeholder='E-mail' inputmode='mail' autofocus='true'></ion-input>
@@ -22,13 +34,18 @@
       <ion-note slot='end' color='danger' *ngIf="password.dirty && password.hasError('minlength')">Min 6 characters</ion-note>
     </ion-item>
 
-    <ion-button expand='block' type='submit' [disabled]='authForm.invalid'>Login</ion-button>
+    <ion-button expand='block' type='submit' [disabled]='authForm.invalid'>
+      {{ configs.action }} <!-- ele pega lá de login.page.ts essa propriedade -->
+    </ion-button>
 
     
 
   </form>
 
-  <ion-button expand='block' fill='clear'>Create account</ion-button>
+  <ion-button expand='block' fill='clear' ((click)="changeAuthMethod()")>
+      <!-- acima no click ele dispara, de login.page.ts, o metodo changeAuthMethod() -->
+      {{ configs.actionChange }}
+  </ion-button>
   <ion-button expand='block'>
     <ion-icon name='logo-facebook' slot='start'></ion-icon>
     Login with Facebook

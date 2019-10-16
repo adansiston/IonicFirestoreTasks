@@ -10,6 +10,28 @@ export class LoginPage implements OnInit {
 
   authForm: FormGroup;
 
+
+  configs = {
+    isSignIn: true,
+    action: 'Login',
+    actionChange: 'Create account'
+  };
+  private nameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
+
+  changeAuthMethod(): void {
+    console.log('ddd');
+    this.configs.isSignIn = !this.configs.isSignIn;
+    const { isSignIn } = this.configs;
+    this.configs.action = isSignIn ? 'Login' : 'Sign Up';
+    this.configs.actionChange = isSignIn ? 'Create Account' : 'Already have an account';
+    !isSignIn
+      ? this.authForm.addControl('name', this.nameControl)
+      // a linha acima adiona dimaicamente mais um campo (name) no nosso formControl
+      : this.authForm.removeControl('name');
+      // a linha acima retira dimaicamente um campo (name) do nosso formControl
+  }
+
+
   constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
@@ -22,6 +44,10 @@ export class LoginPage implements OnInit {
       // args-> email: ['valor inicial', [validadores síncronos], [validadores assíncronos]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     })
+  }
+
+  get name(): FormControl{
+    return <FormControl> this.authForm.get('name');
   }
 
   get email(): FormControl{
