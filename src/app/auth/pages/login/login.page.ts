@@ -19,7 +19,6 @@ export class LoginPage implements OnInit {
   private nameControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
   changeAuthMethod(): void {
-    console.log('ddd');
     this.configs.isSignIn = !this.configs.isSignIn;
     const { isSignIn } = this.configs;
     this.configs.action = isSignIn ? 'Login' : 'Sign Up';
