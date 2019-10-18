@@ -6,7 +6,7 @@
 
   <form [formGroup]='authForm' (submit)='onSubmit()'> <!-- authForm - nome da propriedade formGroup que criamos antes -->
 
-    <ng-container *ngIf='!configs.isSignIn'>
+    <ng-container *ngIf="!configs.isSignIn">
       <ion-item>
           <ion-icon name='person' color='primary' slot='start'></ion-icon>
           <ion-input type='text' formControlName='name' placeholder='Name'></ion-input>
@@ -42,9 +42,9 @@
 
   </form>
 
-  <ion-button expand='block' fill='clear' ((click)="changeAuthMethod()")>
+  <ion-button expand='block' fill='clear' (click)="changeAuthMethod()">
       <!-- acima no click ele dispara, de login.page.ts, o metodo changeAuthMethod() -->
-      {{ configs.actionChange }}
+       {{ configs.actionChange }}
   </ion-button>
   <ion-button expand='block'>
     <ion-icon name='logo-facebook' slot='start'></ion-icon>
